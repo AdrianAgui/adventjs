@@ -1,2 +1,3 @@
 # Advent JS
-Challenges of adventjs of december 2021
+
+[Advent](https://adventjs.dev/) of 25 days of Javascript challenges of december 2021
