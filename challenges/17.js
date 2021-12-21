@@ -37,3 +37,32 @@
     ¡Ten cuidado! Como has visto en el segundo ejemplo, el organigrama puede tener diferentes niveles y además nos viene información que puede ser que no necesitemos. 
     Debemos tener en cuenta el parámetro de carrierID para calcular bien el número y contar todo su equipo.
  */
+
+let boxes = 0;
+
+export default function countPackages(carriers, carrierID) {
+  const driver = carriers.find((d) => d[0] === carrierID);
+  boxes = driver[1];
+
+  driver[2].forEach((subordinate) => {
+    const subord = carriers.find((d) => d[0] === subordinate);
+    if (subord) {
+      getPackagesFromDrivers(subord, carriers);
+    }
+  });
+
+  return boxes;
+}
+
+function getPackagesFromDrivers(driver, mainDrivers) {
+  boxes = boxes + driver[1];
+  if (typeof driver[2] !== "string" && driver[2].length > 0) {
+    driver[2].forEach((d) => {
+      const subord = mainDrivers.find((x) => x[0] === d);
+
+      if (subord) {
+        getPackagesFromDrivers(subord, mainDrivers);
+      }
+    });
+  }
+}
