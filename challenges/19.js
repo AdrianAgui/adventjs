@@ -22,5 +22,41 @@
     learn(4, [10, 14, 20]) // null -> no nos da tiempo a hacer dos cursos
 
     learn(5, [5, 5, 5]) // null -> no nos da tiempo a hacer dos cursos
+    
     Mirando todo el tema de Platzi, además nos hemos dado cuenta que tienen un descuento especial para Navidad. ¿No sabes qué regalar? Regala conocimiento 🎓.
  */
+
+export default function learn(time, courses) {
+  const coursesAux = JSON.parse(JSON.stringify(courses));
+  const pairs = [];
+
+  for (let i = 0; i <= courses.length; i++) {
+    coursesAux.shift();
+    coursesAux.forEach((course, indexAux) => {
+      pairs.push({
+        indexMain: i,
+        indexAux: i + indexAux + 1,
+        value: course + courses[i],
+      });
+    });
+  }
+
+  const minHours = pairs
+    .map((p) => {
+      p.dif = time - p.value;
+      return p;
+    })
+    .filter((p) => p.dif >= 0);
+
+  if (minHours.length > 0) {
+    let smallest = minHours[0];
+    for (let x = 1; x < minHours.length; x++) {
+      if (minHours[x].dif < smallest.dif) {
+        smallest = minHours[x];
+      }
+    }
+    return [smallest.indexMain, smallest.indexAux];
+  }
+
+  return null;
+}
