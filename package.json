@@ -2,7 +2,6 @@
   "name": "adventjs",
   "version": "1.0.0",
   "description": "25 days of Javascript challenges",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
