@@ -2,17 +2,11 @@
   "name": "adventjs",
   "version": "1.0.0",
   "description": "25 days of Javascript challenges",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AdrianAgui/adventjs.git"
   },
   "author": "Adrián Aguirre",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/AdrianAgui/adventjs/issues"
-  },
   "homepage": "https://github.com/AdrianAgui/adventjs#readme"
 }
