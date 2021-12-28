@@ -1,37 +1,55 @@
 /**
-  * Se están preparando las rutas para el trineo de Santa 🎅. Tenemos almacenes por todo el mundo para que Santa pueda recoger los regalos y entregarlos en el destino final. 🎁
+  * Ayer, en noche buena, una família cenó por todo lo alto... Con tanta copa 🍾 encima todavía no han retirado los platos y la comida de ayer...
 
-    Necesitamos saber si las rutas que estamos creando tienen sentido o si Santa va a tener que dejar tirados regalos por el camino. 🥺
+    Un ratoncillo llamado midurat 🐭, que vió ayer el festín escondido, está relamiéndose los bigotes al ver todos los manjares que hay en el comedor.
 
-    Para eso vamos a crear una función que recibe dos parámetros:
+    Eso sí, hay que tener cuidado 😶 y sólo hacer los movimientos correctos para comer algo. Por eso, el ratón, que se ha visto los vídeos de midudev, va a crear una función para saber si su próximo movimiento es correcto o no ✅.
 
-    Un número con la capacidad máxima de regalos en el trineo.
-    El viaje que es un array de arrays. Cada subarray contiene tres números que representan:
-    trip[0] = número de regalos a transportar
-    trip[1] = punto de recogida de los regalos
-    trip[2] = punto de entrega de los regalos
-    La ruta siempre va de izquierda a derecha (nunca volverá Santa hacia atrás) pero... ¡ten en cuenta que en mitad de la ruta puede tener que recoger regalos cuando ya tiene alguno encima!
+    El ratoncillo se puede mover en 4 direcciones: up, down, left, right y el comedor es una matriz (un array de arrays) donde cada posición puede ser:
 
-    Lo mejor es que veamos un ejemplo:
+    Un espacio vacío es que no hay nada
+    Una m es el ratón
+    Un * es la comida
+    Vamos a ver unos ejemplos:
 
-    canCarry(4, [[2, 5, 8], [3, 6, 10]]) // false
-    // En el punto 5 recoge 2 regalos...
-    // En el punto 6 recoge 3 regalos...
-    // Del punto 6 al 8 tendría 5 regalos en total
-    // Y su capacidad es 4... así que ¡no podría!
+    const room = [
+      [' ', ' ', ' '],
+      [' ', ' ', 'm'],
+      [' ', ' ', '*']
+    ]
 
-    canCarry(3, [[1, 1, 5], [2, 2, 10]]) // true
-    // En el punto 1 recoge 1 regalo...
-    // En el punto 2 recoge 2 regalos...
-    // En el punto 5 entrega 1 regalo...
-    // En el punto 10 entrega 2 regalos...
-    // ¡Sí puede! Nunca superó la carga máxima de 3 regalos
+    canMouseEat('up',    room)   // false
+    canMouseEat('down',  room)   // true
+    canMouseEat('right', room)   // false
+    canMouseEat('left',  room)   // false
 
-    canCarry(3, [[2, 1, 5],[3, 5, 7]]) // true -> nunca supera el máximo de capacidad
-    canCarry(4, [[2, 3, 8],[2, 5, 7]]) // true -> del punto 5 al 7 lleva 4 regalos y no supera el máximo
+    const room2 = [
+      ['*', ' ', ' ', ' '],
+      [' ', 'm', '*', ' '],
+      [' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', '*']
+    ]
 
-    canCarry(1, [[2, 3, 8]]) // false -> no podría ni con el primer viaje
-    canCarry(2, [[1, 2, 4], [2, 3, 8]]) // false -> del punto 3 al 4 supera la capacidad máxima porque llevaría 3 regalos
+    canMouseEat('up',    room2)   // false
+    canMouseEat('down',  room2)   // false
+    canMouseEat('right', room2)   // true
+    canMouseEat('left',  room2)   // false
+    ¡Ten en cuenta que el ratón quiere buscar comida en diferentes habitaciones y que cada una puede tener dimensiones diferentes!
 
-    Lo difícil, e importante, es que entiendas que Santa Claus va entregando y recogiendo regalos y que a veces eso puede hacer que supere la carga máxima.
- */
+*/
+
+export default function canMouseEat(direction, game) {
+  const roomDimensions = game[0].length;
+  const flatRoom = game.flat();
+  const mousePos = flatRoom.findIndex((pos) => pos === "m");
+
+  if (direction === "up") {
+    return hasFood(flatRoom, -roomDimensions, mousePos);
+  } else if (direction === "right") {
+    return hasFood(flatRoom, 1, mousePos);
+  } else if (direction === "down") {
+    return hasFood(flatRoom, roomDimensions, mousePos);
+  } else if (direction === "left") {
+    return hasFood(flatRoom, -1, mousePos);
+  }
+}

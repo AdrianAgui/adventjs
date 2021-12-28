@@ -1,37 +1,46 @@
 /**
-  * Se están preparando las rutas para el trineo de Santa 🎅. Tenemos almacenes por todo el mundo para que Santa pueda recoger los regalos y entregarlos en el destino final. 🎁
+  * El abuelo 👴 dice que ve todos los árboles de navidad iguales... La abuela 👵, en cambio, piensa que no. 
+    Que todos los árboles de navidad son distintos...
 
-    Necesitamos saber si las rutas que estamos creando tienen sentido o si Santa va a tener que dejar tirados regalos por el camino. 🥺
+    Vamos a hacer una función que nos diga si dos árboles de navidad son iguales. Para ello, vamos a comparar los árboles que ya creamos en el reto 22.
 
-    Para eso vamos a crear una función que recibe dos parámetros:
+    Tenemos que ver si ambos árboles tienen la misma estructura y los mismos valores en todas las ramas. Aquí tienes unos ejemplos:
 
-    Un número con la capacidad máxima de regalos en el trineo.
-    El viaje que es un array de arrays. Cada subarray contiene tres números que representan:
-    trip[0] = número de regalos a transportar
-    trip[1] = punto de recogida de los regalos
-    trip[2] = punto de entrega de los regalos
-    La ruta siempre va de izquierda a derecha (nunca volverá Santa hacia atrás) pero... ¡ten en cuenta que en mitad de la ruta puede tener que recoger regalos cuando ya tiene alguno encima!
+    const tree = {
+      value: 1,
+      left: { value: 2, left: null, right: null },
+      right: { value: 3, left: null, right: null }
+    }
 
-    Lo mejor es que veamos un ejemplo:
+    checkIsSameTree(tree, tree) // true
 
-    canCarry(4, [[2, 5, 8], [3, 6, 10]]) // false
-    // En el punto 5 recoge 2 regalos...
-    // En el punto 6 recoge 3 regalos...
-    // Del punto 6 al 8 tendría 5 regalos en total
-    // Y su capacidad es 4... así que ¡no podría!
+    const tree2 = {
+      value: 1,
+      left: { value: 3, left: { value: 2, left: null, right: null }, right: null },
+      right: { value: 5, left: null, right: { value: 4, left: null, right: null } }
+    }
 
-    canCarry(3, [[1, 1, 5], [2, 2, 10]]) // true
-    // En el punto 1 recoge 1 regalo...
-    // En el punto 2 recoge 2 regalos...
-    // En el punto 5 entrega 1 regalo...
-    // En el punto 10 entrega 2 regalos...
-    // ¡Sí puede! Nunca superó la carga máxima de 3 regalos
+    checkIsSameTree(tree, tree2) // false
+    checkIsSameTree(tree2, tree2) // true
 
-    canCarry(3, [[2, 1, 5],[3, 5, 7]]) // true -> nunca supera el máximo de capacidad
-    canCarry(4, [[2, 3, 8],[2, 5, 7]]) // true -> del punto 5 al 7 lleva 4 regalos y no supera el máximo
+    El cuñado 🦹‍♂️, que se las sabe todas, me ha dicho que tenga cuidado porque el truco del JSON.stringify puede no funcionar...
+    ya que los árboles pueden ser el mismo pero el orden de representación de las ramas izquierda y derecha puede ser inversa...
+*/
 
-    canCarry(1, [[2, 3, 8]]) // false -> no podría ni con el primer viaje
-    canCarry(2, [[1, 2, 4], [2, 3, 8]]) // false -> del punto 3 al 4 supera la capacidad máxima porque llevaría 3 regalos
+export default function checkIsSameTree(treeA, treeB) {
+  return compare(treeA, treeB);
+}
 
-    Lo difícil, e importante, es que entiendas que Santa Claus va entregando y recogiendo regalos y que a veces eso puede hacer que supere la carga máxima.
- */
+function compare(a, b) {
+  if (!a && !b) {
+    return true;
+  } else if (!a || !b) {
+    return false;
+  } else {
+    return (
+      a.value === b.value &&
+      compare(a.left, b.left) &&
+      compare(a.right, b.right)
+    );
+  }
+}
